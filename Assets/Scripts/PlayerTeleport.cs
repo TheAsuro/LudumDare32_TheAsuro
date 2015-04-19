@@ -29,7 +29,7 @@ public class PlayerTeleport : MonoBehaviour
         {
             lastLeftClick = Time.time;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(ray, out lastLeftClickHit, teleportLayers);
+            Physics.Raycast(ray, out lastLeftClickHit, 1000f, teleportLayers);
         }
 
         if (Time.time <= lastLeftClick + leftClickEarlyCorrection && canTeleport && !chargingTeleport)
