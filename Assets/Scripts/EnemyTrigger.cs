@@ -15,7 +15,7 @@ public class EnemyTrigger : MonoBehaviour
         if (col.tag.Equals("Player"))
         {
             Vector3 direction = GameInfo.gi.player.transform.position - transform.position;
-            if (!Physics.Raycast(transform.position, direction.normalized, direction.magnitude, GameInfo.gi.defaultLayer))
+            if (!Physics.Raycast(transform.position, direction.normalized, direction.magnitude, GameInfo.gi.blockLayer))
             {
                 parentScript.PlayerEntered();
             }
@@ -33,7 +33,7 @@ public class EnemyTrigger : MonoBehaviour
         if (parentScript.PlayerInside)
         {
             Vector3 direction = GameInfo.gi.player.transform.position - transform.position;
-            if (Physics.Raycast(transform.position, direction.normalized, direction.magnitude, GameInfo.gi.defaultLayer))
+            if (Physics.Raycast(transform.position, direction.normalized, direction.magnitude, GameInfo.gi.blockLayer))
             {
                 parentScript.PlayerLeft(false);
             }

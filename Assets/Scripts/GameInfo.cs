@@ -6,7 +6,7 @@ public class GameInfo : MonoBehaviour
     public static GameInfo gi;
 
     public GameObject player;
-    public LayerMask defaultLayer;
+    public LayerMask blockLayer;
 
     private Dictionary<EnemyScript, Transform> enemies = new Dictionary<EnemyScript, Transform>();
     private List<EnemyTrigger> allTriggers = new List<EnemyTrigger>();
@@ -26,6 +26,8 @@ public class GameInfo : MonoBehaviour
     {
         ResumeGame();
         GetComponent<GameMenu>().SetMenuState(GameMenu.MenuState.NoMenu);
+        enemies.Clear();
+        allTriggers.Clear();
     }
 
     public void AddEnemy(EnemyScript newEnemy, Transform enemyTf)

@@ -13,7 +13,6 @@ public class BasicEnemy : EnemyScript
 
     protected override void UpdateAggression()
     {
-        print(aggressionCounter.ToString());
         if (aggressing || Time.time < aggressionEndTime)
         {
             if (GetComponent<NavMeshAgent>().enabled)
