@@ -54,11 +54,15 @@ public class EnemyScript : MonoBehaviour
 
     public void PlayerEntered()
     {
+        aggressionCounter++;
         Aggress();
     }
 
     public void PlayerLeft(bool delayAggression = true)
     {
+        aggressionCounter--;
+        if (aggressionCounter < 0)
+            aggressionCounter = 0;
         EndAggress();
 
         if (!delayAggression)

@@ -13,9 +13,11 @@ public class BasicEnemy : EnemyScript
 
     protected override void UpdateAggression()
     {
+        print(aggressionCounter.ToString());
         if (aggressing || Time.time < aggressionEndTime)
         {
-            GetComponent<NavMeshAgent>().destination = GameInfo.gi.player.transform.position;
+            if (GetComponent<NavMeshAgent>().enabled)
+                GetComponent<NavMeshAgent>().destination = GameInfo.gi.player.transform.position;
         }
         else
         {
@@ -30,14 +32,12 @@ public class BasicEnemy : EnemyScript
 
     protected override void Aggress()
     {
-        aggressionCounter++;
         GetComponent<NavMeshAgent>().enabled = true;
         aggressing = true;
     }
 
     protected override void EndAggress()
     {
-        aggressionCounter--;
         if (aggressionCounter == 0)
         {
             aggressing = false;

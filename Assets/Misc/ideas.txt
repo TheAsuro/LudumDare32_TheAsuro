@@ -23,7 +23,6 @@ Knock out 3+ enemies with tp: 0.25s
 
 Default actions on enemies:
 Get knocked out if too close to teleport
-Can only be killed from behind
 Run to player when they see them
 
 Simple melee enemy:
@@ -34,3 +33,7 @@ Advanced melee enemy:
 1 hp
 Runs to player at sight and attacks at close range
 does not get startled from teleports
+
+
+-- TODO
+Fix enemy never aborting chase

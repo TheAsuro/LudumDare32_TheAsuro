@@ -22,6 +22,12 @@ public class GameInfo : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void OnLevelWasLoaded(int level)
+    {
+        ResumeGame();
+        GetComponent<GameMenu>().SetMenuState(GameMenu.MenuState.NoMenu);
+    }
+
     public void AddEnemy(EnemyScript newEnemy, Transform enemyTf)
     {
         enemies.Add(newEnemy, enemyTf);
@@ -61,12 +67,28 @@ public class GameInfo : MonoBehaviour
     {
         if (playerHasTarget)
         {
-            print("YOU WIN!");
+            PauseGame();
+            GetComponent<GameMenu>().SetMenuState(GameMenu.MenuState.EndMenu);
         }
     }
 
     public void KillPlayer()
     {
         print("YOU DIED!");
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+
+    private void ResumeGame()
+    {
+        Time.timeScale = 1f;
+    }
+
+    public void LoadNextLevel()
+    {
+        Application.LoadLevel(Application.loadedLevel + 1);
     }
 }
