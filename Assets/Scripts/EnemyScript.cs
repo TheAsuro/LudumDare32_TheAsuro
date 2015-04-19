@@ -9,21 +9,25 @@ public class EnemyScript : MonoBehaviour
 
     protected bool aggressing = false;
     protected int aggressionCounter = 0;
-    protected float aggressionEndTime;
-    protected const float aggressionEndDelay = 1f;
 
     public bool KnockedOut { get { return knockedOut; } }
     public bool PlayerInside { get { return aggressing; } }
 
+    protected Vector3 startPosition;
+    protected Quaternion startRotation;
+
     void Awake()
     {
+        originalColor = transform.FindChild("Collider").GetComponent<MeshRenderer>().materials[0].color;
+        startPosition = transform.position;
+        startRotation = transform.rotation;
         Initialize();
     }
 
-    protected void Initialize()
+    void Start()
     {
         GameInfo.gi.AddEnemy(this, transform.FindChild("Collider").transform);
-        originalColor = transform.FindChild("Collider").GetComponent<MeshRenderer>().materials[0].color;
+        LateInitialize();
     }
 
     void Update()
@@ -58,17 +62,22 @@ public class EnemyScript : MonoBehaviour
         Aggress();
     }
 
-    public void PlayerLeft(bool delayAggression = true)
+    public void PlayerLeft()
     {
         aggressionCounter--;
         if (aggressionCounter < 0)
             aggressionCounter = 0;
         EndAggress();
+    }
 
-        if (!delayAggression)
-        {
-            aggressionEndTime = Time.time;
-        }
+    public void Reset()
+    {
+        transform.position = startPosition;
+        transform.rotation = startRotation;
+        aggressionCounter = 0;
+        aggressing = false;
+        EndKnockOut();
+        ResetEnemy();
     }
 
     protected virtual void Aggress() {}
@@ -76,4 +85,10 @@ public class EnemyScript : MonoBehaviour
     protected virtual void EndAggress() { }
 
     protected virtual void UpdateAggression() { }
+
+    protected virtual void ResetEnemy() { }
+
+    protected virtual void Initialize() { }
+
+    protected virtual void LateInitialize() { }
 }

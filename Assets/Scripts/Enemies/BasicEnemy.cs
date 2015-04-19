@@ -5,15 +5,14 @@ public class BasicEnemy : EnemyScript
 {
     private const float killDistance = 2f;
 
-    void Awake()
+    protected override void Initialize()
     {
         GetComponent<NavMeshAgent>().enabled = false;
-        base.Initialize();
     }
 
     protected override void UpdateAggression()
     {
-        if (aggressing || Time.time < aggressionEndTime)
+        if (aggressing)
         {
             if (GetComponent<NavMeshAgent>().enabled)
                 GetComponent<NavMeshAgent>().destination = GameInfo.gi.player.transform.position;
@@ -40,7 +39,11 @@ public class BasicEnemy : EnemyScript
         if (aggressionCounter == 0)
         {
             aggressing = false;
-            aggressionEndTime = Time.time + aggressionEndDelay;
         }
+    }
+
+    protected override void ResetEnemy()
+    {
+        GetComponent<NavMeshAgent>().enabled = false;
     }
 }

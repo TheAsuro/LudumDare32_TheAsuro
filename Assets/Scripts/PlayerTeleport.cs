@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerTeleport : MonoBehaviour
+public class PlayerTeleport : MonoBehaviour, IResetObject
 {
     public bool canTeleport;
     public LayerMask teleportLayers;
@@ -16,12 +16,17 @@ public class PlayerTeleport : MonoBehaviour
     private Vector3 teleportPosition;
 
     private float lastJumpHitCount;
-    private float lastJumpHitTimeout = Mathf.Infinity;
+    private float lastJumpHitTimeout;
 
     private float lastLeftClick = Mathf.NegativeInfinity;
     private RaycastHit lastLeftClickHit;
 
     public bool ChargingTeleport { get { return chargingTeleport; } }
+
+    void Start()
+    {
+        GameInfo.gi.AddResetObject(this);
+    }
 
     void Update()
     {
@@ -78,5 +83,12 @@ public class PlayerTeleport : MonoBehaviour
         GameInfo.gi.UpdateTriggers();
 
         lastJumpHitTimeout = Time.time + jumpHitTimeoutDuration;
+    }
+
+    public void Reset()
+    {
+        chargingTeleport = false;
+        lastJumpHitCount = 0;
+        lastLeftClick = Mathf.NegativeInfinity;
     }
 }

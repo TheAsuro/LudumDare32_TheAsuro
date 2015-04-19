@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ParticleSelfDestruct : MonoBehaviour
+public class ParticleSelfDestruct : MonoBehaviour, IResetObject
 {
+    float deathTime = Mathf.Infinity;
+
     void Awake()
     {
         float maxParticleRunTime = 0f;
@@ -21,6 +23,30 @@ public class ParticleSelfDestruct : MonoBehaviour
         if (GetComponent<ParticleSystem>() != null)
             maxParticleRunTime = Mathf.Max(maxParticleRunTime, GetComponent<ParticleSystem>().duration);
 
-        GameObject.Destroy(gameObject, maxParticleRunTime);
+        deathTime = Time.time + maxParticleRunTime;
+    }
+
+    void Start()
+    {
+        GameInfo.gi.AddResetObject(this);
+    }
+
+    void Update()
+    {
+        if (Time.time > deathTime)
+        {
+            Reset();
+        }
+    }
+
+    public void Reset()
+    {
+        GameInfo.gi.RemoveResetObject(this);
+        GameObject.Destroy(gameObject);
+    }
+
+    void IResetObject.Reset()
+    {
+        Reset();
     }
 }

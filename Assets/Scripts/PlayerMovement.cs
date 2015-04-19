@@ -7,11 +7,15 @@ public class PlayerMovement : MonoBehaviour
     public bool canMove;
 
     private PlayerTeleport teleportScript;
+    private Vector3 startPosition;
+    private Quaternion startRotation;
 
     void Awake()
     {
         GameInfo.gi.player = gameObject;
         teleportScript = GetComponent<PlayerTeleport>();
+        startPosition = transform.position;
+        startRotation = transform.rotation;
     }
 
     void FixedUpdate()
@@ -41,5 +45,11 @@ public class PlayerMovement : MonoBehaviour
         {
             GameInfo.gi.GoalEntered();
         }
+    }
+
+    public void ResetPlayer()
+    {
+        transform.position = startPosition;
+        transform.rotation = startRotation;
     }
 }

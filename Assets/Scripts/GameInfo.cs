@@ -10,6 +10,7 @@ public class GameInfo : MonoBehaviour
 
     private Dictionary<EnemyScript, Transform> enemies = new Dictionary<EnemyScript, Transform>();
     private List<EnemyTrigger> allTriggers = new List<EnemyTrigger>();
+    private List<IResetObject> resetObjects = new List<IResetObject>();
     private bool playerHasTarget = false;
 
     void Awake()
@@ -28,6 +29,7 @@ public class GameInfo : MonoBehaviour
         GetComponent<GameMenu>().SetMenuState(GameMenu.MenuState.NoMenu);
         enemies.Clear();
         allTriggers.Clear();
+        resetObjects.Clear();
     }
 
     public void AddEnemy(EnemyScript newEnemy, Transform enemyTf)
@@ -38,6 +40,17 @@ public class GameInfo : MonoBehaviour
     public void AddTrigger(EnemyTrigger trigger)
     {
         allTriggers.Add(trigger);
+    }
+
+    public void AddResetObject(IResetObject obj)
+    {
+        resetObjects.Add(obj);
+    }
+
+    public void RemoveResetObject(IResetObject obj)
+    {
+        if (resetObjects.Contains(obj))
+            resetObjects.Remove(obj);
     }
 
     public void UpdateTriggers()
@@ -76,7 +89,7 @@ public class GameInfo : MonoBehaviour
 
     public void KillPlayer()
     {
-        print("YOU DIED!");
+        ResetGame();
     }
 
     private void PauseGame()
@@ -89,8 +102,32 @@ public class GameInfo : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    public void Restart()
+    {
+        GetComponent<GameMenu>().SetMenuState(GameMenu.MenuState.NoMenu);
+        ResetGame();
+        ResumeGame();
+    }
+
+    private void ResetGame()
+    {
+        player.GetComponent<PlayerMovement>().ResetPlayer();
+        foreach (EnemyScript enemy in enemies.Keys)
+        {
+            enemy.Reset();
+        }
+        resetObjects.ForEach((IResetObject obj) => obj.Reset());
+
+        playerHasTarget = false;
+    }
+
     public void LoadNextLevel()
     {
         Application.LoadLevel(Application.loadedLevel + 1);
     }
+}
+
+public interface IResetObject
+{
+    void Reset();
 }

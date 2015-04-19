@@ -35,7 +35,7 @@ public class EnemyTrigger : MonoBehaviour
             Vector3 direction = GameInfo.gi.player.transform.position - transform.position;
             if (Physics.Raycast(transform.position, direction.normalized, direction.magnitude, GameInfo.gi.blockLayer))
             {
-                parentScript.PlayerLeft(false);
+                parentScript.PlayerLeft();
             }
         }
     }
