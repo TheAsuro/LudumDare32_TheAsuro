@@ -1,0 +1,36 @@
+-- Gameplay
+Player is 1-hit
+Enemies are usually 1-hit
+Enemies can be knocked out by teleport or killed by backstabbing
+Teleport should be favoured over stab
+Goal is to get something at the end of the level and get it back to the start
+(Maybe everything you collect at the end is an upgrade?)
+
+
+-- Teleporting
+
+Needs channel time where player is vulnerable
+Creates small explosion at target point
+Explosion knocks out enemies
+Chain teleporting:
+First teleport channel: 2s
+Knock out 1 enemy with tp: 1s
+Knock out 2 enemies with tp: 0.5s
+Knock out 3+ enemies with tp: 0.25s
+
+
+-- Enemy types
+
+Default actions on enemies:
+Get knocked out if too close to teleport
+Can only be killed from behind
+Run to player when they see them
+
+Simple melee enemy:
+1 hp
+Runs to player at sight and attacks at close range
+
+Advanced melee enemy:
+1 hp
+Runs to player at sight and attacks at close range
+does not get startled from teleports
