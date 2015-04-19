@@ -3,10 +3,6 @@ using System.Collections;
 
 public class BasicEnemy : EnemyScript
 {
-    private bool aggressing = false;
-    private int aggressionCounter = 0;
-    private float aggressionEndTime;
-    private const float aggressionEndDelay = 1f;
     private const float killDistance = 2f;
 
     void Awake()

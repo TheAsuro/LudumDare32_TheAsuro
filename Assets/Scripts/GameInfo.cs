@@ -6,8 +6,10 @@ public class GameInfo : MonoBehaviour
     public static GameInfo gi;
 
     public GameObject player;
+    public LayerMask defaultLayer;
 
     private Dictionary<EnemyScript, Transform> enemies = new Dictionary<EnemyScript, Transform>();
+    private List<EnemyTrigger> allTriggers = new List<EnemyTrigger>();
     private bool playerHasTarget = false;
 
     void Awake()
@@ -23,6 +25,16 @@ public class GameInfo : MonoBehaviour
     public void AddEnemy(EnemyScript newEnemy, Transform enemyTf)
     {
         enemies.Add(newEnemy, enemyTf);
+    }
+
+    public void AddTrigger(EnemyTrigger trigger)
+    {
+        allTriggers.Add(trigger);
+    }
+
+    public void UpdateTriggers()
+    {
+        allTriggers.ForEach((EnemyTrigger trigger) => trigger.UpdatePlayerCollision());
     }
 
     public List<EnemyScript> getEnemiesInRange(Vector3 centerPos, float range)

@@ -7,7 +7,13 @@ public class EnemyScript : MonoBehaviour
     private float knockedOutUntil;
     private Color originalColor;
 
+    protected bool aggressing = false;
+    protected int aggressionCounter = 0;
+    protected float aggressionEndTime;
+    protected const float aggressionEndDelay = 1f;
+
     public bool KnockedOut { get { return knockedOut; } }
+    public bool PlayerInside { get { return aggressing; } }
 
     void Awake()
     {
@@ -51,9 +57,14 @@ public class EnemyScript : MonoBehaviour
         Aggress();
     }
 
-    public void PlayerLeft()
+    public void PlayerLeft(bool delayAggression = true)
     {
         EndAggress();
+
+        if (!delayAggression)
+        {
+            aggressionEndTime = Time.time;
+        }
     }
 
     protected virtual void Aggress() {}

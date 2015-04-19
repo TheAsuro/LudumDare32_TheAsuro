@@ -75,6 +75,8 @@ public class PlayerTeleport : MonoBehaviour
             lastJumpHitCount++;
         }
 
+        GameInfo.gi.UpdateTriggers();
+
         lastJumpHitTimeout = Time.time + jumpHitTimeoutDuration;
     }
 }

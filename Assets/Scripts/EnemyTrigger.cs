@@ -5,15 +5,38 @@ public class EnemyTrigger : MonoBehaviour
 {
     public EnemyScript parentScript;
 
+    void Awake()
+    {
+        GameInfo.gi.AddTrigger(this);
+    }
+
     void OnTriggerEnter(Collider col)
     {
         if (col.tag.Equals("Player"))
-            parentScript.PlayerEntered();
+        {
+            Vector3 direction = GameInfo.gi.player.transform.position - transform.position;
+            if (!Physics.Raycast(transform.position, direction.normalized, direction.magnitude, GameInfo.gi.defaultLayer))
+            {
+                parentScript.PlayerEntered();
+            }
+        }
     }
 
     void OnTriggerExit(Collider col)
     {
         if (col.tag.Equals("Player"))
             parentScript.PlayerLeft();
+    }
+
+    public void UpdatePlayerCollision()
+    {
+        if (parentScript.PlayerInside)
+        {
+            Vector3 direction = GameInfo.gi.player.transform.position - transform.position;
+            if (Physics.Raycast(transform.position, direction.normalized, direction.magnitude, GameInfo.gi.defaultLayer))
+            {
+                parentScript.PlayerLeft(false);
+            }
+        }
     }
 }
