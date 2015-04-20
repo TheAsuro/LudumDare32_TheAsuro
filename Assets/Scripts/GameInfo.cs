@@ -44,6 +44,7 @@ public class GameInfo : MonoBehaviour
         enemies.Clear();
         allTriggers.Clear();
         resetObjects.Clear();
+        playerHasTarget = false;
     }
 
     public void AddEnemy(EnemyScript newEnemy, Transform enemyTf)

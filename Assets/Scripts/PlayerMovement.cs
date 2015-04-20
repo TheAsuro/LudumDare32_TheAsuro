@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
         if (canMove && Camera.main != null && !teleportScript.ChargingTeleport)
         {
             Vector3 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-            Vector3 movementDirection = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f) * inputDirection;
+            Vector3 movementDirection = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f) * inputDirection;
 
             GetComponent<Rigidbody>().velocity = new Vector3(movementDirection.x, 0f, movementDirection.z) * moveSpeed;
         }

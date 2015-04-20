@@ -18,9 +18,7 @@ public class CamLook : MonoBehaviour
         {
             if (!GameInfo.gi.Paused)
             {
-                float xDelta = Input.GetAxis("Mouse X");
-
-                transform.parent.Rotate(new Vector3(0f, xDelta, 0f), Space.World);
+                transform.position = Vector3.Lerp(transform.position, new Vector3(playerObject.transform.position.x, transform.position.y, playerObject.transform.position.z), 0.01f);
             }
         }
     }
