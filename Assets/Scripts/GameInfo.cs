@@ -17,7 +17,7 @@ public class GameInfo : MonoBehaviour
     private bool paused = false;
 
     public Vector2 virtualCursorPos;
-    public float sensitivity = 1f;
+    public float sensitivity = 4f;
 
     public bool Paused { get { return paused; } }
 

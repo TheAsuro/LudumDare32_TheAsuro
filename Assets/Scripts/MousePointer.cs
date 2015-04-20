@@ -3,6 +3,8 @@ using System.Collections;
 
 public class MousePointer : MonoBehaviour
 {
+    private const float verticalCorrection = 4f;
+
     public GameObject pointerPrefab;
     private bool draw = true;
 
@@ -43,7 +45,7 @@ public class MousePointer : MonoBehaviour
 
     private void UpdateVirtualCursor()
     {
-        GameInfo.gi.virtualCursorPos += new Vector2(0f, Input.GetAxis("Mouse Y"));
+        GameInfo.gi.virtualCursorPos += new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * GameInfo.gi.sensitivity;
         if (GameInfo.gi.virtualCursorPos.y > Screen.height)
             GameInfo.gi.virtualCursorPos.y = Screen.height;
         if (GameInfo.gi.virtualCursorPos.y < 0f)
