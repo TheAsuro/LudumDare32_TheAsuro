@@ -8,7 +8,6 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         GameInfo.gi.SetMenuState(GameMenu.MenuState.MainMenu);
-        sensSlider.value = GameInfo.gi.sensitivity;
     }
 
     public void LoadGame()

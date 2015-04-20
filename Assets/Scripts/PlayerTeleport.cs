@@ -31,10 +31,10 @@ public class PlayerTeleport : MonoBehaviour, IResetObject
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(GameInfo.gi.virtualCursorPos);
-            if (!Physics.Raycast(ray, 1000f, GameInfo.gi.teleportCancelLayers))
+            if (MousePointer.cursorActive)
             {
                 lastLeftClick = Time.time;
+                Ray ray = new Ray(Camera.main.transform.position, (MousePointer.cursorPosition - Camera.main.transform.position).normalized);
                 Physics.Raycast(ray, out lastLeftClickHit, 1000f, GameInfo.gi.teleportLayers);
             }
         }

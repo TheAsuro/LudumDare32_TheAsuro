@@ -15,16 +15,10 @@ public class GameMenu : MonoBehaviour
 
     private MenuState currentState = MenuState.NoMenu;
 
-    void Awake()
-    {
-        ResetCursor();
-    }
-
     public void SetMenuState(MenuState state)
     {
         currentState = state;
 
-        ResetCursor();
         endMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -32,8 +26,8 @@ public class GameMenu : MonoBehaviour
         switch (state)
         {
             case MenuState.NoMenu:
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
                 break;
             case MenuState.PauseMenu:
                 break;
@@ -48,10 +42,5 @@ public class GameMenu : MonoBehaviour
     public MenuState GetMenuState()
     {
         return currentState;
-    }
-
-    private void ResetCursor()
-    {
-        GameInfo.gi.virtualCursorPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
     }
 }

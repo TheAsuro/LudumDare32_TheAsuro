@@ -13,24 +13,30 @@ public class MousePointer : MonoBehaviour
 
     private GameObject pointerInstance;
 
+    public static bool cursorActive = false;
+    public static Vector3 cursorPosition;
+
     void Update()
     {
-        UpdateVirtualCursor();
-
         if (draw)
         {
             RaycastHit hitInfo;
-            Ray ray = GetComponent<Camera>().ScreenPointToRay(GameInfo.gi.virtualCursorPos);
+            Ray ray = GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hitInfo, 1000f, GameInfo.gi.teleportLayers))
             {
+                Vector3 newCursorPos = CalculateCursorPosition(hitInfo.point);
+
                 if (pointerInstance != null)
                 {
-                    pointerInstance.transform.position = hitInfo.point + yOffset;
+                    pointerInstance.transform.position = newCursorPos + yOffset;
                 }
                 else
                 {
-                    pointerInstance = (GameObject)GameObject.Instantiate(pointerPrefab, hitInfo.point + yOffset, rotOffset);
+                    pointerInstance = (GameObject)GameObject.Instantiate(pointerPrefab, newCursorPos + yOffset, rotOffset);
                 }
+
+                cursorActive = true;
+                cursorPosition = newCursorPos;
             }
             else
             {
@@ -39,16 +45,22 @@ public class MousePointer : MonoBehaviour
                     GameObject.Destroy(pointerInstance);
                     pointerInstance = null;
                 }
+
+                cursorActive = false;
             }
         }
     }
 
-    private void UpdateVirtualCursor()
+    private Vector3 CalculateCursorPosition(Vector3 hitPosition)
     {
-        GameInfo.gi.virtualCursorPos += new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * GameInfo.gi.sensitivity;
-        if (GameInfo.gi.virtualCursorPos.y > Screen.height)
-            GameInfo.gi.virtualCursorPos.y = Screen.height;
-        if (GameInfo.gi.virtualCursorPos.y < 0f)
-            GameInfo.gi.virtualCursorPos.y = 0f;
+        if (Vector3.Distance(hitPosition, GameInfo.gi.player.transform.position) > GameInfo.gi.maxCursorReach)
+        {
+            Vector3 direction = (hitPosition - GameInfo.gi.player.transform.position).normalized;
+            return GameInfo.gi.player.transform.position + (direction * GameInfo.gi.maxCursorReach);
+        }
+        else
+        {
+            return hitPosition;
+        }
     }
 }

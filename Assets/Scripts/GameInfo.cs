@@ -9,15 +9,13 @@ public class GameInfo : MonoBehaviour
     public LayerMask blockLayer;
     public LayerMask teleportLayers;
     public LayerMask teleportCancelLayers;
+    public float maxCursorReach = 5f;
 
     private Dictionary<EnemyScript, Transform> enemies = new Dictionary<EnemyScript, Transform>();
     private List<EnemyTrigger> allTriggers = new List<EnemyTrigger>();
     private List<IResetObject> resetObjects = new List<IResetObject>();
     private bool playerHasTarget = false;
     private bool paused = false;
-
-    public Vector2 virtualCursorPos;
-    public float sensitivity = 4f;
 
     public bool Paused { get { return paused; } }
 
@@ -29,6 +27,14 @@ public class GameInfo : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.LoadLevel(0);
+        }
     }
 
     void OnLevelWasLoaded(int level)
