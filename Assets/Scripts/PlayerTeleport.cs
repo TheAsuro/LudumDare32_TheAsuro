@@ -4,8 +4,6 @@ using System.Collections;
 public class PlayerTeleport : MonoBehaviour, IResetObject
 {
     public bool canTeleport;
-    public LayerMask teleportLayers;
-    public LayerMask teleportCancelLayers;
     public float teleportDelay;
     public float knockoutRange;
     public float knockoutDuration;
@@ -33,11 +31,11 @@ public class PlayerTeleport : MonoBehaviour, IResetObject
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (!Physics.Raycast(ray, 1000f, teleportCancelLayers))
+            Ray ray = Camera.main.ScreenPointToRay(GameInfo.gi.virtualCursorPos);
+            if (!Physics.Raycast(ray, 1000f, GameInfo.gi.teleportCancelLayers))
             {
                 lastLeftClick = Time.time;
-                Physics.Raycast(ray, out lastLeftClickHit, 1000f, teleportLayers);
+                Physics.Raycast(ray, out lastLeftClickHit, 1000f, GameInfo.gi.teleportLayers);
             }
         }
 

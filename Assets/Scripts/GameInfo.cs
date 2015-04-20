@@ -7,12 +7,17 @@ public class GameInfo : MonoBehaviour
 
     public GameObject player;
     public LayerMask blockLayer;
+    public LayerMask teleportLayers;
+    public LayerMask teleportCancelLayers;
 
     private Dictionary<EnemyScript, Transform> enemies = new Dictionary<EnemyScript, Transform>();
     private List<EnemyTrigger> allTriggers = new List<EnemyTrigger>();
     private List<IResetObject> resetObjects = new List<IResetObject>();
     private bool playerHasTarget = false;
     private bool paused = false;
+
+    public Vector2 virtualCursorPos;
+    public float sensitivity = 1f;
 
     public bool Paused { get { return paused; } }
 

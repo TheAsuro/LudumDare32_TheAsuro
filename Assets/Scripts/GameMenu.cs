@@ -13,12 +13,18 @@ public class GameMenu : MonoBehaviour
 
     public GameObject endMenu;
 
-    private MenuState currentState = MenuState.NoMenu;    
+    private MenuState currentState = MenuState.NoMenu;
+
+    void Awake()
+    {
+        ResetCursor();
+    }
 
     public void SetMenuState(MenuState state)
     {
         currentState = state;
 
+        ResetCursor();
         endMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -42,5 +48,10 @@ public class GameMenu : MonoBehaviour
     public MenuState GetMenuState()
     {
         return currentState;
+    }
+
+    private void ResetCursor()
+    {
+        GameInfo.gi.virtualCursorPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
     }
 }

@@ -20,7 +20,7 @@ public class CamLook : MonoBehaviour
             {
                 float xDelta = Input.GetAxis("Mouse X");
 
-                transform.parent.Rotate(new Vector3(0f, xDelta, 0f), Space.World);
+                transform.parent.Rotate(new Vector3(0f, xDelta * GameInfo.gi.sensitivity, 0f), Space.World);
             }
         }
     }

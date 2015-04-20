@@ -3,9 +3,12 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour
 {
-    void Awake()
+    public UnityEngine.UI.Slider sensSlider;
+
+    void Start()
     {
         GameInfo.gi.SetMenuState(GameMenu.MenuState.MainMenu);
+        sensSlider.value = GameInfo.gi.sensitivity * 50f;
     }
 
     public void LoadGame()
