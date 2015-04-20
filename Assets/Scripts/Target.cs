@@ -15,6 +15,11 @@ public class Target : MonoBehaviour, IResetObject
         GameInfo.gi.AddResetObject(this);
     }
 
+    void Update()
+    {
+        display.transform.Rotate(new Vector3(0f, 0.25f, 0f), Space.World);
+    }
+
     public void Pickup()
     {
         GameInfo.gi.TargetCollected();
