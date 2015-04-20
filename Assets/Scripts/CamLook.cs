@@ -15,7 +15,14 @@ public class CamLook : MonoBehaviour
         if (playerObject == null)
             FindPlayer();
         else
-            transform.LookAt(playerObject.transform);
+        {
+            if (!GameInfo.gi.Paused)
+            {
+                float xDelta = Input.GetAxis("Mouse X");
+
+                transform.parent.Rotate(new Vector3(0f, xDelta, 0f), Space.World);
+            }
+        }
     }
 
     private void FindPlayer()

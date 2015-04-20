@@ -7,7 +7,8 @@ public class GameMenu : MonoBehaviour
     {
         NoMenu,
         PauseMenu,
-        EndMenu
+        EndMenu,
+        MainMenu
     }
 
     public GameObject endMenu;
@@ -19,15 +20,21 @@ public class GameMenu : MonoBehaviour
         currentState = state;
 
         endMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
         switch (state)
         {
             case MenuState.NoMenu:
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 break;
             case MenuState.PauseMenu:
                 break;
             case MenuState.EndMenu:
                 endMenu.SetActive(true);
+                break;
+            case MenuState.MainMenu:
                 break;
         }
     }

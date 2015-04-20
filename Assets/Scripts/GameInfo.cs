@@ -12,6 +12,9 @@ public class GameInfo : MonoBehaviour
     private List<EnemyTrigger> allTriggers = new List<EnemyTrigger>();
     private List<IResetObject> resetObjects = new List<IResetObject>();
     private bool playerHasTarget = false;
+    private bool paused = false;
+
+    public bool Paused { get { return paused; } }
 
     void Awake()
     {
@@ -95,11 +98,13 @@ public class GameInfo : MonoBehaviour
     private void PauseGame()
     {
         Time.timeScale = 0f;
+        paused = true;
     }
 
     private void ResumeGame()
     {
         Time.timeScale = 1f;
+        paused = false;
     }
 
     public void Restart()
@@ -124,6 +129,11 @@ public class GameInfo : MonoBehaviour
     public void LoadNextLevel()
     {
         Application.LoadLevel(Application.loadedLevel + 1);
+    }
+
+    public void SetMenuState(GameMenu.MenuState state)
+    {
+        GetComponent<GameMenu>().SetMenuState(state);
     }
 
     public bool InMenu { get { return GetComponent<GameMenu>().GetMenuState() == GameMenu.MenuState.NoMenu; } }
