@@ -48,12 +48,16 @@ public class EnemyScript : MonoBehaviour
         knockedOut = true;
         knockedOutUntil = Time.time + duration;
         transform.FindChild("Collider").GetComponent<MeshRenderer>().materials[0].color = Color.black;
+        transform.FindChild("Cone").gameObject.SetActive(false);
+        transform.FindChild("Cylinder").gameObject.SetActive(false);
     }
 
     public void EndKnockOut()
     {
         knockedOut = false;
         transform.FindChild("Collider").GetComponent<MeshRenderer>().materials[0].color = originalColor;
+        transform.FindChild("Cone").gameObject.SetActive(true);
+        transform.FindChild("Cylinder").gameObject.SetActive(true);
     }
 
     public void PlayerEntered()
