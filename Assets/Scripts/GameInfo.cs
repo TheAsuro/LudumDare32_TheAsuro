@@ -125,6 +125,8 @@ public class GameInfo : MonoBehaviour
     {
         Application.LoadLevel(Application.loadedLevel + 1);
     }
+
+    public bool InMenu { get { return GetComponent<GameMenu>().GetMenuState() == GameMenu.MenuState.NoMenu; } }
 }
 
 public interface IResetObject

@@ -5,6 +5,7 @@ public class PlayerTeleport : MonoBehaviour, IResetObject
 {
     public bool canTeleport;
     public LayerMask teleportLayers;
+    public LayerMask teleportCancelLayers;
     public float teleportDelay;
     public float knockoutRange;
     public float knockoutDuration;
@@ -32,9 +33,12 @@ public class PlayerTeleport : MonoBehaviour, IResetObject
     {
         if (Input.GetMouseButtonDown(0))
         {
-            lastLeftClick = Time.time;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(ray, out lastLeftClickHit, 1000f, teleportLayers);
+            if (!Physics.Raycast(ray, 1000f, teleportCancelLayers))
+            {
+                lastLeftClick = Time.time;
+                Physics.Raycast(ray, out lastLeftClickHit, 1000f, teleportLayers);
+            }
         }
 
         if (Time.time <= lastLeftClick + leftClickEarlyCorrection && canTeleport && !chargingTeleport)

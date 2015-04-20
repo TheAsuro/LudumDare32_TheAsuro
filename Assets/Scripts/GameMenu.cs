@@ -3,8 +3,6 @@ using System.Collections;
 
 public class GameMenu : MonoBehaviour
 {
-    public GameObject endMenu;
-
     public enum MenuState
     {
         NoMenu,
@@ -12,8 +10,14 @@ public class GameMenu : MonoBehaviour
         EndMenu
     }
 
+    public GameObject endMenu;
+
+    private MenuState currentState = MenuState.NoMenu;    
+
     public void SetMenuState(MenuState state)
     {
+        currentState = state;
+
         endMenu.SetActive(false);
 
         switch (state)
@@ -26,5 +30,10 @@ public class GameMenu : MonoBehaviour
                 endMenu.SetActive(true);
                 break;
         }
+    }
+
+    public MenuState GetMenuState()
+    {
+        return currentState;
     }
 }
