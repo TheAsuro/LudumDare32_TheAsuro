@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class GameInfo : MonoBehaviour
@@ -33,7 +34,7 @@ public class GameInfo : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.LoadLevel(0);
+            SceneManager.LoadScene(0);
         }
     }
 
@@ -140,7 +141,7 @@ public class GameInfo : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        Application.LoadLevel(Application.loadedLevel + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void SetMenuState(GameMenu.MenuState state)

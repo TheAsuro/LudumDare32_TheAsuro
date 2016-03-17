@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class EndScript : MonoBehaviour
@@ -16,7 +17,7 @@ public class EndScript : MonoBehaviour
     {
         if (Time.time > endTime)
         {
-            Application.LoadLevel(0);
+            SceneManager.LoadScene(0);
         }
     }
 }
