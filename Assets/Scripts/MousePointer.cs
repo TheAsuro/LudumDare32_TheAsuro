@@ -1,17 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class MousePointer : MonoBehaviour
 {
-    private const float verticalCorrection = 4f;
-
-    public GameObject pointerPrefab;
-    private bool draw = true;
-
-    private Vector3 yOffset = new Vector3(0f, 0.01f, 0f);
-    private Quaternion rotOffset = Quaternion.Euler(90f, 0f, 0f);
-
+    [SerializeField]
+    private GameObject pointerPrefab;
     private GameObject pointerInstance;
+    [SerializeField]
+    private bool draw = true;
 
     public static bool cursorActive = false;
     public static Vector3 cursorPosition;
@@ -28,11 +23,12 @@ public class MousePointer : MonoBehaviour
 
                 if (pointerInstance != null)
                 {
-                    pointerInstance.transform.position = newCursorPos + yOffset;
+                    pointerInstance.transform.position = newCursorPos;
                 }
                 else
                 {
-                    pointerInstance = (GameObject)GameObject.Instantiate(pointerPrefab, newCursorPos + yOffset, rotOffset);
+                    pointerInstance = (GameObject)Instantiate(pointerPrefab, newCursorPos, Quaternion.identity);
+                    pointerInstance.transform.SetParent(GameInfo.gi.transform.FindChild("Canvas"), true);
                 }
 
                 cursorActive = true;
@@ -53,14 +49,18 @@ public class MousePointer : MonoBehaviour
 
     private Vector3 CalculateCursorPosition(Vector3 hitPosition)
     {
+        Vector3 val;
+
         if (Vector3.Distance(hitPosition, GameInfo.gi.player.transform.position) > GameInfo.gi.maxCursorReach)
         {
             Vector3 direction = (hitPosition - GameInfo.gi.player.transform.position).normalized;
-            return GameInfo.gi.player.transform.position + (direction * GameInfo.gi.maxCursorReach);
+            val = GameInfo.gi.player.transform.position + (direction * GameInfo.gi.maxCursorReach);
         }
         else
         {
-            return hitPosition;
+            val = hitPosition;
         }
+
+        return Camera.main.WorldToScreenPoint(val);
     }
 }
